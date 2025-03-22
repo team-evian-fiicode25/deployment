@@ -1,0 +1,12 @@
+#!/bin/bash
+
+cd "$(dirname "$0")/../terraform"
+
+main() {
+    aws eks --region $(get_region) update-kubeconfig \
+        --name $(terraform output -raw cluster_name)
+}
+
+get_region() {
+    grep -m1 -Po 'region\s*=\s*"\K[^"]+' main.tf
+}
