@@ -10,3 +10,5 @@ main() {
 get_region() {
     grep -m1 -Po 'region\s*=\s*"\K[^"]+' main.tf
 }
+
+main
