@@ -35,6 +35,8 @@ metadata:
   name: consumer-api-service
   labels:
     app: consumer-api
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
 spec:
   type: LoadBalancer
   selector:
