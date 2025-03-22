@@ -18,7 +18,7 @@ provider "aws" {
 
 locals {
   app_name     = "rideme"
-  cluster_name = "education-eks-${random_string.suffix.result}"
+  cluster_name = "rideme-${random_string.suffix.result}"
 }
 
 resource "random_string" "suffix" {
