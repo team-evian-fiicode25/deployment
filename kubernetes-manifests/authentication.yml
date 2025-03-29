@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: server
-          image: ghcr.io/team-evian-fiicode25/authentication:v0.6.0
+          image: ghcr.io/team-evian-fiicode25/authentication:v0.7.0
           ports:
           - containerPort: 8080
           env:
@@ -26,18 +26,8 @@ spec:
             value: '0'
           - name: MANDATORYFIELDS__EMAIL
             value: '1'
-          - name: DATABASETYPE
-            value: mongo
-          - name: MONGO__HOSTNAME
-            value: rideme-docdb-cluster.cluster-clemy6q00i9f.eu-central-1.docdb.amazonaws.com
-          - name: MONGO__PORT
-            value: '27017'
-          - name: MONGO__USER
-            value: root
-          - name: MONGO__PASSWORD
+          - name: DATABASE__MONGO__URL
             value: <redacted>
-          - name: MONGO__DATABASE
-            value: authentication
           resources:
             requests:
               cpu: 100m
