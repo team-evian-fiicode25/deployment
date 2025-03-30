@@ -10,3 +10,10 @@ output "documentdb_connection" {
   }
   sensitive = true
 }
+
+output "test_ec2" {
+  value = {
+    public_dns = aws_instance.test_ec2.public_dns
+    public_ip  = aws_instance.test_ec2.public_ip
+  }
+}
