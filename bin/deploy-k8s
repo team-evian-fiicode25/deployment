@@ -1,0 +1,22 @@
+#!/bin/bash
+
+cd "$(dirname "$0")"
+
+
+################################
+# Get mongo url from terraform #
+################################
+cd ../terraform
+export MONGO_URL="$(terraform output --json documentdb_connection | jq -r '.url')"
+cd -
+
+#########################
+# Generate secrets file #
+#########################
+internal/generate-secrets-file-k8s
+
+#######################
+# Apply k8s manifests #
+#######################
+./setup-kubectl
+kubectl apply -k ../kubernetes-manifests

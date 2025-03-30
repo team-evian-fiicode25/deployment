@@ -27,7 +27,10 @@ spec:
           - name: MANDATORYFIELDS__EMAIL
             value: '1'
           - name: DATABASE__MONGO__URL
-            value: <redacted>
+            valueFrom:
+                secretKeyRef:
+                  name: secrets
+                  key: mongo-url
           resources:
             requests:
               cpu: 100m

@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
   - consumer-api.yml
   - authentication.yml
+  - secrets.yml
