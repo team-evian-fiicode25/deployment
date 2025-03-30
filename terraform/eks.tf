@@ -29,7 +29,9 @@ module "eks" {
     one = {
       name = "ng-1"
 
-      instance_types = ["t2.small"]
+      capacity_type = "SPOT"
+
+      instance_types = ["t2.small", "t3.small", "t3a.small"]
 
       min_size     = 1
       max_size     = 4
