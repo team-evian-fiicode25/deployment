@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.authentication.name }}
+  labels:
+    app: {{ .Values.authentication.name }}
+spec:
+  replicas: {{ .Values.authentication.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.authentication.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.authentication.name }}
+    spec:
+      containers:
+        - name: server
+          image: "{{ .Values.authentication.image }}:{{ .Values.authentication.tag }}"
+          ports:
+          - containerPort: 8080
+          env:
+          - name: MANDATORYFIELDS__USERNAME
+            value: '1'
+          - name: MANDATORYFIELDS__PHONENUMBER
+            value: '0'
+          - name: MANDATORYFIELDS__EMAIL
+            value: '1'
+          - name: DATABASE__MONGO__URL
+            value: "{{ .Values.authentication.MONGO_URL }}"
+          resources:
+            requests:
+              cpu: {{ .Values.authentication.resources.requests.cpu }}
+              memory: {{ .Values.authentication.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.authentication.resources.limits.cpu }}
+              memory: {{ .Values.authentication.resources.limits.memory }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: "{{ .Values.authentication.name }}-service"
+  labels:
+    app: {{ .Values.authentication.name }}
+spec:
+  type: ClusterIP
+  selector:
+    app: {{ .Values.authentication.name }}
+  ports:
+  - name: graphql
+    port: 80
+    targetPort: 8080

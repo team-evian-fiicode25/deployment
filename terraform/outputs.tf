@@ -9,7 +9,6 @@ output "documentdb_connection" {
     username = aws_docdb_cluster.main.master_username
     password = aws_docdb_cluster.main.master_password
     port     = aws_docdb_cluster.main.port
-    url      = "mongodb://${aws_docdb_cluster.main.master_username}:${aws_docdb_cluster.main.master_password}@${aws_docdb_cluster.main.endpoint}:${aws_docdb_cluster.main.port}/?replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false"
   }
   sensitive = true
 }

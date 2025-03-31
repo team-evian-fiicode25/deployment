@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.consumer.name }}
+  labels:
+    app: {{ .Values.consumer.name }}
+spec:
+  replicas: {{ .Values.consumer.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.consumer.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.consumer.name }}
+    spec:
+      containers:
+        - name: server
+          image: "{{ .Values.consumer.image }}:{{ .Values.consumer.tag }}"
+          ports:
+          - containerPort: 8000
+          env:
+          - name: AUTH_URL
+            value: "http://{{ .Values.authentication.name }}-service/graphql"
+          resources:
+            requests:
+              cpu: {{ .Values.consumer.resources.requests.cpu }}
+              memory: {{ .Values.consumer.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.consumer.resources.limits.cpu }}
+              memory: {{ .Values.consumer.resources.limits.memory }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: "{{ .Values.consumer.name }}-service"
+  labels:
+    app: {{ .Values.consumer.name }}
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
+spec:
+  type: LoadBalancer
+  selector:
+    app: {{ .Values.consumer.name }}
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 8000

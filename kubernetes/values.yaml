@@ -1,0 +1,25 @@
+authentication:
+  name: authentication
+  image: ghcr.io/team-evian-fiicode25/authentication
+  tag: v0.7.0
+  replicas: 2
+  resources:
+    requests:
+      cpu: 100m
+      memory: 64Mi
+    limits:
+      cpu: 200m
+      memory: 128Mi
+
+consumer:
+  name: consumer-api
+  image: ghcr.io/team-evian-fiicode25/consumer/api
+  tag: v0.1.0-deployment-test18
+  replicas: 2
+  resources:
+    requests:
+      cpu: 100m
+      memory: 64Mi
+    limits:
+      cpu: 200m
+      memory: 128Mi
