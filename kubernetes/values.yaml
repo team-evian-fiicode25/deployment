@@ -1,3 +1,5 @@
+sslCertArn: "arn:aws:acm:eu-central-1:681273343657:certificate/d3bf9945-6fd3-4f8f-8270-83bbcf5a0a61"
+
 authentication:
   name: authentication
   image: ghcr.io/team-evian-fiicode25/authentication
