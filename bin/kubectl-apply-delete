@@ -2,6 +2,16 @@
 
 cd "$(dirname "$0")"
 
+if [[ $# -eq 0 ]]; then
+    delete=0
+elif [[ $# -eq 1 ]] && [ "$1" = "apply" ]; then
+    delete=0
+elif [[ $# -eq 1 ]] && [ "$1" = "delete" ]; then
+    delete=1
+else
+    >&2 echo "Usage: $0 [apply|delete]"
+    exit 1
+fi
 
 ################################
 # Get mongo url from terraform #
@@ -18,5 +28,10 @@ internal/generate-secrets-file-k8s
 #######################
 # Apply k8s manifests #
 #######################
-./setup-kubectl
-kubectl apply -k ../kubernetes-manifests
+./kubectl-setup
+
+if [ "$delete" -eq 1 ]; then
+    kubectl delete -k ../kubernetes-manifests
+else
+    kubectl apply -k ../kubernetes-manifests
+fi
