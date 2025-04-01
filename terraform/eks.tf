@@ -38,4 +38,21 @@ module "eks" {
       desired_size = 2
     }
   }
+
+  cluster_addons = {
+    coredns = {
+      most_recent = true
+    }
+    kube-proxy = {
+      most_recent = true
+    }
+    vpc-cni = {
+      most_recent = true
+      configuration_values = jsonencode({
+        env = {
+          ENABLE_POD_ENI = "true"
+        }
+      })
+    }
+  }
 }
